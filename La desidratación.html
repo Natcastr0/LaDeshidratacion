@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Food Lab | Deshidratación de alimentos</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+:root {
+    --verde: #286b50;
+    --verde-oscuro: #203f31;
+    --amarillo: #f0bd65;
+    --fondo: #f7f6ef;
+    --texto: #20352b;
+    --tarjeta: #fffef9;
+    --borde: #dce4d9;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+}
+
+.topbar {
+    background: var(--verde);
+    color: white;
+    padding: 16px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.brand {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.topbar nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.topbar a {
+    color: white;
+    text-decoration: none;
+}
+
+.topbar a:hover {
+    text-decoration: underline;
+}
+
+.hero {
+    padding: 55px 5%;
+    background: linear-gradient(120deg, #e5efdf, #fbebca);
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: 35px;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: var(--verde);
+}
+
+.hero h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin: 15px 0;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    max-width: 650px;
+}
+
+.hero img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 30px;
+}
+
+.container-custom {
+    width: min(1120px, 90%);
+    margin: auto;
+}
+
+.section {
+    padding: 55px 0;
+}
+
+.section h2,
+.quiz h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin-bottom: 15px;
+}
+
+.intro {
+    max-width: 800px;
+    color: #65736a;
+    margin-bottom: 25px;
+}
+
+.pill {
+    display: inline-block;
+    background: #e1eadc;
+    color: #28523e;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.two-col {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.card-custom {
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 18px;
+    padding: 23px;
+    box-shadow: 0 8px 25px #20352b08;
+    min-width: 0;
+}
+
+.card-custom h3 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.card-custom p {
+    color: #526359;
+}
+
+.card-custom img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.emoji {
+    font-size: 2rem;
+}
+
+.highlight {
+    background: #e6efe2;
+    border-left: 5px solid var(--verde);
+    padding: 18px 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.steps li {
+    padding-bottom: 10px;
+}
+
+.btn-main {
+    display: inline-block;
+    background: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 22px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-main:hover {
+    background: #194d38;
+    color: white;
+}
+
+.btn-secondary-custom {
+    background: var(--amarillo);
+    color: #29251e;
+    margin-left: 8px;
+}
+
+.quiz {
+    background: var(--verde-oscuro);
+    color: white;
+    padding: 55px 0;
+}
+
+.quiz .intro {
+    color: #d4e0d6;
+}
+
+.quizbox {
+    background: var(--tarjeta);
+    color: var(--texto);
+    padding: clamp(20px, 4vw, 38px);
+    border-radius: 18px;
+    max-width: 850px;
+}
+
+.question {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+.question:last-of-type {
+    border-bottom: none;
+}
+
+.question legend {
+    font-weight: bold;
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+}
+
+.option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #e0e7dd;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background: #f0f6ed;
+}
+
+.option input {
+    margin-top: 6px;
+    accent-color: var(--verde);
+}
+
+.feedback {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #e6efe2;
+    color: var(--texto);
+}
+
+.feedback.show {
+    display: block;
+}
+
+.score {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+footer {
+    padding: 28px 5%;
+    background: #152e23;
+    color: #e7eee8;
+    text-align: center;
+}
+
+@media (max-width: 760px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 40px 5%;
+    }
+
+    .hero img {
+        height: 230px;
+    }
+
+    .cards,
+    .two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 40px 0;
+    }
+
+    .btn-secondary-custom {
+        margin: 10px 0 0;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">🍃 FOOD LAB · STEAM I</div>
+
+    <nav aria-label="Navegación principal">
+        <a href="#objetivos">Objetivos</a>
+        <a href="#metodo">Español</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#english">English</a>
+        <a href="#quiz">Quiz</a>
+    </nav>
+</header>
+
+<main>
+
+<!-- PORTADA -->
+<section class="hero">
+    <div>
+        <span class="eyebrow">Métodos de conservación de alimentos</span>
+
+        <h1>La deshidratación</h1>
+
+        <p>
+            La deshidratación es un método de conservación que elimina gran parte
+            del agua de los alimentos. Ayuda a prolongar su vida útil y facilita
+            su almacenamiento y transporte.
+        </p>
+
+        <a class="btn-main" href="#objetivos">
+            Conocer el proyecto ↓
+        </a>
+    </div>
+
+    <div>
+        <img
+            src="https://i.pinimg.com/736x/1f/5d/fa/1f5dfa1930c5be907a9c44d6b3502247.jpg"
+            alt="Variedad de frutas frescas">
+    </div>
+</section>
+
+<!-- OBJETIVOS E HIPÓTESIS AL INICIO -->
+<section class="section" id="objetivos" style="background:#fffef9">
+    <div class="container-custom">
+
+        <span class="pill">01 · Investigación</span>
+
+        <h2>Objetivos e hipótesis</h2>
+
+        <div class="two-col">
+
+            <article class="card-custom">
+                <h3>Objetivo general</h3>
+
+                <p>
+                    Conocer los beneficios de la deshidratación, sus diferentes
+                    métodos y los cambios que ocurren en los alimentos, así como
+                    la manera en que ayuda a prolongar su vida útil y facilita
+                    su almacenamiento y transporte.
+                </p>
+
+                <h3>Objetivos específicos</h3>
+
+                <ul>
+                    <li>
+                        Explicar cómo la eliminación de agua ayuda a limitar
+                        el crecimiento de microorganismos y retrasa el deterioro.
+                    </li>
+
+                    <li>
+                        Identificar diferentes métodos de deshidratación,
+                        como el secado al sol, el horno y la freidora de aire.
+                    </li>
+
+                    <li>
+                        Reconocer la importancia del secado y del almacenamiento
+                        adecuados.
+                    </li>
+                </ul>
+            </article>
+
+            <article class="card-custom">
+                <h3>Hipótesis del proyecto</h3>
+
+                <p>
+                    Si se elaboran frutas deshidratadas, reducir su contenido
+                    de agua puede prolongar su vida útil y limitar el crecimiento
+                    de muchos microorganismos. La eficacia dependerá del tipo
+                    de fruta, el proceso y las condiciones de almacenamiento.
+                </p>
+
+                <h3>Importancia del proyecto</h3>
+
+                <p>
+                    El proyecto busca aprovechar frutas maduras que todavía
+                    estén en buenas condiciones, reducir el desperdicio de
+                    alimentos y obtener un producto fácil de almacenar
+                    y transportar.
+                </p>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- INFORMACIÓN EN ESPAÑOL -->
+<section class="section" id="metodo">
+    <div class="container-custom">
+
+        <span class="pill">02 · ¿Qué es?</span>
+
+        <h2>¿Cómo funciona la deshidratación?</h2>
+
+        <p class="intro">
+            La deshidratación reduce significativamente el contenido de agua
+            de los alimentos. Al quedar menos agua disponible, se limita el
+            crecimiento de muchos microorganismos y se retrasa el deterioro.
+        </p>
+
+        <div class="cards">
+
+            <article class="card-custom">
+                <div class="emoji">💧</div>
+                <h3>Menos humedad</h3>
+                <p>
+                    Se extrae gran parte del agua mediante calor, aire
+                    o exposición al sol.
+                </p>
+            </article>
+
+            <article class="card-custom">
+                <div class="emoji">🛡️</div>
+                <h3>Mayor conservación</h3>
+                <p>
+                    La reducción de agua ayuda a limitar el crecimiento
+                    de microorganismos y retrasa el deterioro.
+                </p>
+            </article>
+
+            <article class="card-custom">
+                <div class="emoji">🎒</div>
+                <h3>Fácil de transportar</h3>
+                <p>
+                    Los alimentos deshidratados suelen reducir su peso
+                    y volumen, ocupando menos espacio.
+                </p>
+            </article>
+
+        </div>
+
+        <div class="highlight">
+            <strong>Objetivo del proyecto:</strong>
+            elaborar frutas deshidratadas aprovechando frutas maduras que
+            todavía estén en buenas condiciones y reduciendo el desperdicio.
+        </div>
+    </div>
+</section>
+
+<!-- MÉTODOS -->
+<section class="section" id="metodos" style="background:#edf1e8">
+    <div class="container-custom">
+
+        <span class="pill">03 · Métodos</span>
+
+        <h2>Formas de deshidratar</h2>
+
+        <p class="intro">
+            Existen diferentes formas de retirar el agua de las frutas.
+            El tiempo depende del tipo de fruta, el grosor de las piezas,
+            la temperatura y las condiciones ambientales.
+        </p>
+
+        <div class="cards">
+
+            <article class="card-custom">
+                <div class="emoji">☀️</div>
+                <h3>Secado al sol</h3>
+                <p>
+                    Las frutas se cortan en rodajas y se exponen al sol
+                    y al aire. Deben protegerse de insectos y contaminación.
+                    El tiempo depende del clima y de la fruta.
+                </p>
+            </article>
+
+            <article class="card-custom">
+                <div class="emoji">♨️</div>
+                <h3>Horno</h3>
+                <p>
+                    Las piezas se colocan en el horno a una temperatura
+                    adecuada para facilitar la salida de humedad.
+                    Se debe revisar el proceso periódicamente.
+                </p>
+            </article>
+
+            <article class="card-custom">
+                <div class="emoji">🍟</div>
+                <h3>Freidora de aire</h3>
+                <p>
+                    Las frutas se cortan en rodajas finas y se revisan
+                    durante el proceso. Hay que seguir las instrucciones
+                    del aparato utilizado.
+                </p>
+            </article>
+
+        </div>
+
+        <article class="card-custom" style="margin-top:20px">
+            <h3>También se menciona el microondas</h3>
+
+            <p>
+                La investigación incluye el uso del microondas en intervalos
+                cortos, revisando la fruta y volteándola cuando sea necesario.
+                El tiempo depende del alimento y del aparato.
+            </p>
+        </article>
+
+    </div>
+</section>
+
+<!-- PROCESO -->
+<section class="section" id="proceso">
+    <div class="container-custom">
+
+        <span class="pill">04 · Paso a paso</span>
+
+        <h2>Del alimento fresco al producto conservado</h2>
+
+        <div class="two-col">
+
+            <article class="card-custom">
+                 <img
+                    src="https://i.pinimg.com/1200x/fd/62/8a/fd628ae952c558c98b8178a3e1af8bf5.jpg"
+                    alt="Frutas">
+                <h3>Etapas principales</h3>
+            
+                <ol class="steps">
+                    <li>
+                        <strong>Seleccionar:</strong>
+                        elegir frutas que estén en buenas condiciones.
+                    </li>
+
+                    <li>
+                        <strong>Lavar:</strong>
+                        retirar la tierra y las impurezas.
+                    </li>
+
+                    <li>
+                        <strong>Preparar:</strong>
+                        cortar las frutas en piezas de grosor similar.
+                    </li>
+
+                    <li>
+                        <strong>Deshidratar:</strong>
+                        utilizar el método seleccionado y revisar el proceso.
+                    </li>
+
+                    <li>
+                        <strong>Dejar enfriar:</strong>
+                        permitir que la fruta se enfríe antes de guardarla.
+                    </li>
+
+                    <li>
+                        <strong>Almacenar:</strong>
+                        utilizar recipientes limpios, secos y bien cerrados.
+                    </li>
+                </ol>
+            </article>
+
+            <article class="card-custom">
+                <img
+                    src="https://i.pinimg.com/1200x/ae/aa/91/aeaa919948263123cdc888cb08cb5c12.jpg"
+                    alt="Plátanos frescos">
+
+                <h3>Frutas que se pueden utilizar</h3>
+
+                <p>
+                    Algunas frutas que se pueden deshidratar son las manzanas,
+                    peras, uvas, ciruelas, duraznos, plátanos, kiwis, fresas,
+                    higos, arándanos, cerezas, piñas y dátiles.
+                </p>
+
+                <div class="highlight">
+                    <strong>Recuerda:</strong>
+                    la preparación, el secado adecuado y el almacenamiento
+                    limpio y seco son importantes para conservar la calidad
+                    y seguridad de los alimentos.
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- APARTADO EXCLUSIVAMENTE EN INGLÉS -->
+<section class="section" id="english" style="background:#edf1e8">
+    <div class="container-custom">
+
+        <span class="pill">05 · English section</span>
+
+        <h2>Food Dehydration</h2>
+
+        <p class="intro">
+            Learn how dehydration helps preserve food, explore common drying
+            methods, and review the basic steps.
+        </p>
+
+        <div class="two-col">
+
+            <article class="card-custom">
+
+                <img
+                    src="https://i.pinimg.com/1200x/9c/15/26/9c15269c8338185b2d44a8734b91a976.jpg"
+                    alt="Fresh fruit ready to be prepared">
+
+                <h3>What is food dehydration?</h3>
+
+                <p>
+                    Dehydration is a food preservation method that removes
+                    much of the water from food. With less available water,
+                    the growth of many microorganisms can be limited and
+                    spoilage can be delayed.
+                </p>
+
+                <h3>Main benefits</h3>
+
+                <ul>
+                    <li>It can extend the shelf life of food.</li>
+                    <li>It reduces weight and volume.</li>
+                    <li>It makes food easier to store and transport.</li>
+                    <li>It can help reduce food waste.</li>
+                </ul>
+
+            </article>
+
+            <article class="card-custom">
+
+                <img
+                    src="https://i.pinimg.com/1200x/6b/15/87/6b15878caa79dc370a88ab7fe22a35bb.jpg"
+                    alt="A variety of fresh fruit">
+
+                <h3>Common drying methods</h3>
+
+                <p>
+                    <strong>Sun drying:</strong>
+                    Fruit is exposed to sunlight and moving air while
+                    protected from insects and contamination.
+                </p>
+
+                <p>
+                    <strong>Oven drying:</strong>
+                    Low heat helps moisture leave the fruit. Drying time
+                    depends on the fruit and its thickness.
+                </p>
+
+                <p>
+                    <strong>Air fryer:</strong>
+                    Thin fruit slices are dried and checked regularly.
+                    Follow the appliance instructions.
+                </p>
+
+                <h3>Basic steps</h3>
+
+                <ol>
+                    <li>Select fruit in good condition.</li>
+                    <li>Wash and cut it into similar-sized pieces.</li>
+                    <li>Dry it using an appropriate method.</li>
+                    <li>Let it cool before storing.</li>
+                    <li>Store it in a clean, dry container.</li>
+                </ol>
+
+            </article>
+
+        </div>
+
+        <div class="cards" style="margin-top:20px">
+
+            <article class="card-custom">
+                <img
+                    src="https://i.pinimg.com/736x/11/78/20/117820fc6ed0f8cb68a9102743de5b18.jpg">
+
+                <h3>Fruit selection</h3>
+
+                <p>
+                    Apples, bananas, strawberries, grapes, pears, and
+                    pineapples are examples of fruits that can be dehydrated.
+                </p>
+            </article>
+
+            <article class="card-custom">
+                <img
+                    src="https://i.pinimg.com/1200x/4e/b8/f6/4eb8f6990dd58f6df54e17c550d2d885.jpg"
+                    alt="Fruit prepared for preservation">
+
+                <h3>Food storage</h3>
+
+                <p>
+                    Keep dried food in a clean, dry, sealed container
+                    and protect it from moisture.
+                </p>
+            </article>
+
+            <article class="card-custom">
+                <img
+                    src="https://i.pinimg.com/1200x/25/b5/97/25b597938d613b5d82cc871c762cc967.jpg"
+                    alt="Food ingredients">
+
+                <h3>Remember</h3>
+
+                <p>
+                    Successful dehydration depends on the fruit, slice
+                    thickness, drying conditions, and storage.
+                </p>
+            </article>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- CUESTIONARIO INTERACTIVO EN INGLÉS -->
+<section class="quiz" id="quiz">
+    <div class="container-custom">
+
+        <span class="pill">06 · Practice your English</span>
+
+        <h2>Interactive Quiz</h2>
+
+        <p class="intro">
+            Answer the questions in English. Select one answer for each
+            question, then check your score. You can try again.
+        </p>
+
+        <form id="quizForm" class="quizbox">
+
+            <fieldset class="question">
+                <legend>1. What is the main purpose of dehydration?</legend>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="a">
+                    To add water to food
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="b">
+                    To remove much of the water from food
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q1" value="c">
+                    To freeze all food
+                </label>
+            </fieldset>
+
+            <fieldset class="question">
+                <legend>
+                    2. True or False: Dehydration can help slow the growth
+                    of microorganisms.
+                </legend>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="a">
+                    True
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q2" value="b">
+                    False
+                </label>
+            </fieldset>
+
+            <fieldset class="question">
+                <legend>3. Which method uses solar energy?</legend>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="a">
+                    Oven drying
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="b">
+                    Sun drying
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q3" value="c">
+                    Freezing
+                </label>
+            </fieldset>
+
+            <fieldset class="question">
+                <legend>
+                    4. Why should fruit slices have a similar thickness?
+                </legend>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="a">
+                    To help them dry more evenly
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="b">
+                    To make them absorb more water
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q4" value="c">
+                    To make them heavier
+                </label>
+            </fieldset>
+
+            <fieldset class="question">
+                <legend>
+                    5. True or False: Dried food should be stored
+                    in a clean, dry place.
+                </legend>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="a">
+                    True
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q5" value="b">
+                    False
+                </label>
+            </fieldset>
+
+            <fieldset class="question">
+                <legend>
+                    6. Which of these is a benefit of dehydration?
+                </legend>
+
+                <label class="option">
+                    <input type="radio" name="q6" value="a">
+                    Food always becomes heavier
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q6" value="b">
+                    Food takes up more storage space
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="q6" value="c">
+                    Food can become lighter and easier to transport
+                </label>
+            </fieldset>
+
+            <div style="margin-top:22px">
+
+                <button type="submit" class="btn-main">
+                    Check Answers
+                </button>
+
+                <button type="button"
+                        class="btn-main btn-secondary-custom"
+                        id="retry">
+                    Try Again
+                </button>
+
+            </div>
+
+            <div class="feedback" id="feedback" aria-live="polite"></div>
+
+        </form>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <strong>Food Lab · STEAM I</strong>
+    <br>
+    Food preservation by dehydration
+    <br>
+    Educational project
+</footer>
+
+<script>
+const answers = {
+    q1: "b",
+    q2: "a",
+    q3: "b",
+    q4: "a",
+    q5: "a",
+    q6: "c"
+};
+
+const explanations = {
+    q1: "Dehydration removes much of the water from food.",
+    q2: "True. Less available water helps limit microbial growth.",
+    q3: "Sun drying uses energy from the sun.",
+    q4: "Similar slices can help the fruit dry more evenly.",
+    q5: "True. Clean, dry storage helps protect food quality.",
+    q6: "Removing water usually reduces food weight and volume."
+};
+
+const form = document.getElementById("quizForm");
+const feedback = document.getElementById("feedback");
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let score = 0;
+    let unanswered = 0;
+    let details = [];
+
+    for (let i = 1; i <= 6; i++) {
+        const questionName = "q" + i;
+
+        const selected = form.querySelector(
+            'input[name="' + questionName + '"]:checked'
+        );
+
+        if (!selected) {
+            unanswered++;
+
+            details.push(
+                "<li><strong>Question " + i +
+                ":</strong> Not answered. " +
+                explanations[questionName] + "</li>"
+            );
+
+        } else if (selected.value === answers[questionName]) {
+            score++;
+
+            details.push(
+                "<li>✅ <strong>Question " + i +
+                ": Correct.</strong> " +
+                explanations[questionName] + "</li>"
+            );
+
+        } else {
+            details.push(
+                "<li>❌ <strong>Question " + i +
+                ": Incorrect.</strong> " +
+                explanations[questionName] + "</li>"
+            );
+        }
+    }
+
+    const percentage = Math.round((score / 6) * 100);
+
+    let message;
+
+    if (score === 6) {
+        message = "Excellent work!";
+    } else if (score >= 4) {
+        message = "Good job! Review the feedback below.";
+    } else {
+        message = "Keep practicing and try again.";
+    }
+
+    feedback.innerHTML =
+        '<div class="score">Your score: ' +
+        score + ' / 6 (' + percentage + '%)</div>' +
+        '<p>' + message + '</p>' +
+        (unanswered > 0
+            ? '<p>You left ' + unanswered +
+              ' question(s) unanswered.</p>'
+            : '') +
+        '<ul>' + details.join("") + '</ul>';
+
+    feedback.classList.add("show");
+
+    feedback.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+});
+
+document.getElementById("retry").addEventListener("click", function() {
+    form.reset();
+
+    feedback.classList.remove("show");
+    feedback.innerHTML = "";
+
+    document.getElementById("quiz").scrollIntoView({
+        behavior: "smooth"
+    });
+});
+</script>
+
+</body>
+</html>
