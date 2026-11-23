@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Lab | Deshidratación de alimentos</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --verde:#286b50;
+  --verde-oscuro:#203f31;
+  --amarillo:#f0bd65;
+  --fondo:#f7f6ef;
+  --texto:#20352b;
+  --tarjeta:#fffef9;
+  --borde:#dce4d9;
+}
+* {box-sizing:border-box;}
+html {scroll-behavior:smooth;}
+body {
+  margin:0;
+  background:var(--fondo);
+  color:var(--texto);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.6;
+}
+.topbar {
+  background:var(--verde);
+  color:white;
+  padding:16px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+}
+.brand {font-weight:bold;letter-spacing:1px;}
+.topbar nav {display:flex;flex-wrap:wrap;gap:15px;}
+.topbar a {color:white;text-decoration:none;}
+.topbar a:hover {text-decoration:underline;}
+.hero {
+  padding:55px 5%;
+  background:linear-gradient(120deg,#e5efdf,#fbebca);
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  align-items:center;
+  gap:35px;
+}
+.eyebrow {
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-weight:bold;
+  font-size:.8rem;
+  color:var(--verde);
+}
+.hero h1 {
+  font-family:Georgia,serif;
+  font-size:clamp(2.4rem,5vw,4rem);
+  line-height:1.1;
+  margin:15px 0;
+}
+.hero p {font-size:1.1rem;max-width:650px;}
+.hero img {
+  width:100%;
+  height:300px;
+  object-fit:cover;
+  border-radius:30px;
+}
+.container-custom {width:min(1120px,90%);margin:auto;}
+.section {padding:55px 0;}
+.section h2,.quiz h2 {
+  font-family:Georgia,serif;
+  font-size:clamp(1.8rem,4vw,2.5rem);
+  margin-bottom:15px;
+}
+.intro {max-width:800px;color:#65736a;margin-bottom:25px;}
+.pill {
+  display:inline-block;
+  background:#e1eadc;
+  color:#28523e;
+  padding:5px 12px;
+  border-radius:20px;
+  font-size:.8rem;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+.cards {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.two-col {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:22px;
+  align-items:start;
+}
+.card-custom {
+  background:var(--tarjeta);
+  border:1px solid var(--borde);
+  border-radius:18px;
+  padding:23px;
+  box-shadow:0 8px 25px #20352b08;
+  min-width:0;
+}
+.card-custom h3 {font-size:1.2rem;margin:10px 0;}
+.card-custom p {color:#526359;}
+.card-custom img {
+  width:100%;
+  height:190px;
+  object-fit:cover;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+.emoji {font-size:2rem;}
+.highlight {
+  background:#e6efe2;
+  border-left:5px solid var(--verde);
+  padding:18px 20px;
+  border-radius:8px;
+  margin-top:20px;
+}
+.steps li {padding-bottom:10px;}
+.btn-main {
+  display:inline-block;
+  background:var(--verde);
+  color:white;
+  border:none;
+  border-radius:30px;
+  padding:12px 22px;
+  font-weight:bold;
+  text-decoration:none;
+  cursor:pointer;
+}
+.btn-main:hover {background:#194d38;color:white;}
+.btn-secondary-custom {
+  background:var(--amarillo);
+  color:#29251e;
+  margin-left:8px;
+}
+.section-light {background:#fffef9;}
+.section-alt {background:#edf1e8;}
+.quiz {
+  background:var(--verde-oscuro);
+  color:white;
+  padding:55px 0;
+}
+.quiz .intro {color:#d4e0d6;}
+.quizbox {
+  background:var(--tarjeta);
+  color:var(--texto);
+  padding:clamp(20px,4vw,38px);
+  border-radius:18px;
+  max-width:850px;
+}
+.question {padding:18px 0;border-bottom:1px solid var(--borde);}
+.question:last-of-type {border-bottom:none;}
+.question legend {font-weight:bold;font-size:1.05rem;margin-bottom:12px;}
+.option {
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:10px;
+  margin:5px 0;
+  border:1px solid #e0e7dd;
+  border-radius:9px;
+  cursor:pointer;
+}
+.option:hover {background:#f0f6ed;}
+.option input {margin-top:6px;accent-color:var(--verde);}
+.feedback {
+  display:none;
+  margin-top:20px;
+  padding:20px;
+  border-radius:12px;
+  background:#e6efe2;
+  color:var(--texto);
+}
+.feedback.show {display:block;}
+.score {font-size:1.4rem;font-weight:bold;}
+footer {
+  padding:28px 5%;
+  background:#152e23;
+  color:#e7eee8;
+  text-align:center;
+}
+.experiment-app {
+  background:var(--tarjeta);
+  border:1px solid var(--borde);
+  border-radius:18px;
+  padding:clamp(16px,3vw,28px);
+  box-shadow:0 8px 25px #20352b08;
+}
+.stage-buttons {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:22px;
+}
+.stage-button {
+  flex:1 1 130px;
+  border:2px solid var(--verde);
+  color:var(--verde);
+  background:white;
+  border-radius:30px;
+  padding:12px 18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.stage-button:hover,.stage-button.active {
+  background:var(--verde);
+  color:white;
+}
+.stage-content h3 {
+  color:var(--verde-oscuro);
+  font-family:Georgia,serif;
+}
+.observation-list li {margin-bottom:10px;}
+.photo-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  margin-top:22px;
+}
+.photo-card {
+  background:#f7f8f3;
+  border:1px solid var(--borde);
+  border-radius:14px;
+  padding:12px;
+}
+.photo-card img {
+  width:100%;
+  height:280px;
+  object-fit:contain;
+  background:#eceee8;
+  border-radius:9px;
+}
+.photo-card p {margin:10px 0 0;color:#526359;}
+.status-message,.error-message {
+  padding:18px;
+  border-radius:12px;
+  background:#e6efe2;
+}
+.error-message {background:#fff0ed;border:1px solid #d88;}
+.comparison-wrap {overflow-x:auto;margin-top:24px;}
+.comparison-table {
+  width:100%;
+  min-width:650px;
+  border-collapse:collapse;
+  background:white;
+}
+.comparison-table th,.comparison-table td {
+  border:1px solid var(--borde);
+  padding:10px;
+  text-align:left;
+}
+.comparison-table th {background:#e6efe2;}
+.note-data {
+  margin-top:20px;
+  padding:14px;
+  border-left:4px solid var(--amarillo);
+  background:#fff6e6;
+  border-radius:8px;
+  color:#55462e;
+}
+@media(max-width:760px) {
+  .hero {grid-template-columns:1fr;padding:40px 5%;}
+  .hero img {height:230px;}
+  .cards,.two-col {grid-template-columns:1fr;}
+  .section {padding:40px 0;}
+  .btn-secondary-custom {margin:10px 0 0;}
+  .topbar {align-items:flex-start;flex-direction:column;}
+  .photo-grid {grid-template-columns:1fr;}
+  .photo-card img {height:auto;max-height:360px;}
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+  <div class="brand">🍃 FOOD LAB · STEAM I</div>
+  <nav aria-label="Navegación principal">
+    <a href="#objetivos">Objetivos</a>
+    <a href="#metodo">Español</a>
+    <a href="#proceso">Proceso</a>
+    <a href="#experimento">Experimento</a>
+    <a href="#english">English</a>
+    <a href="#quiz">Quiz</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div>
+    <span class="eyebrow">Métodos de conservación de alimentos</span>
+    <h1>La deshidratación</h1>
+    <p>La deshidratación es un método de conservación que elimina gran parte del agua de los alimentos. Ayuda a prolongar su vida útil y facilita su almacenamiento y transporte.</p>
+    <a class="btn-main" href="#objetivos">Conocer el proyecto ↓</a>
+  </div>
+  <div>
+    <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900" alt="Variedad de frutas frescas">
+  </div>
+</section>
+
+<section class="section section-light" id="objetivos">
+<div class="container-custom">
+  <span class="pill">01 · Investigación</span>
+  <h2>Objetivos e hipótesis</h2>
+  <div class="two-col">
+    <article class="card-custom">
+      <h3>Objetivo general</h3>
+      <p>Conocer los beneficios de la deshidratación, sus diferentes métodos y los cambios que ocurren en los alimentos, así como la manera en que ayuda a prolongar su vida útil y facilita su almacenamiento y transporte.</p>
+      <h3>Objetivos específicos</h3>
+      <ul>
+        <li>Explicar cómo la eliminación de agua ayuda a limitar el crecimiento de microorganismos y retrasa el deterioro.</li>
+        <li>Identificar diferentes métodos de deshidratación, como el secado al sol, el horno y la freidora de aire.</li>
+        <li>Reconocer la importancia del secado y del almacenamiento adecuados.</li>
+      </ul>
+    </article>
+    <article class="card-custom">
+      <h3>Hipótesis del proyecto</h3>
+      <p>Si se elaboran frutas deshidratadas, reducir su contenido de agua puede prolongar su vida útil y limitar el crecimiento de muchos microorganismos. La eficacia dependerá del tipo de fruta, el proceso y las condiciones de almacenamiento.</p>
+      <h3>Importancia del proyecto</h3>
+      <p>El proyecto busca aprovechar frutas maduras que todavía estén en buenas condiciones, reducir el desperdicio de alimentos y obtener un producto fácil de almacenar y transportar.</p>
+    </article>
+  </div>
+</div>
+</section>
+
+<section class="section" id="metodo">
+<div class="container-custom">
+  <span class="pill">02 · ¿Qué es?</span>
+  <h2>¿Cómo funciona la deshidratación?</h2>
+  <p class="intro">La deshidratación reduce significativamente el contenido de agua de los alimentos. Al quedar menos agua disponible, se limita el crecimiento de muchos microorganismos y se retrasa el deterioro.</p>
+  <div class="cards">
+    <article class="card-custom"><div class="emoji">💧</div><h3>Menos humedad</h3><p>Se extrae gran parte del agua mediante calor, aire o exposición al sol.</p></article>
+    <article class="card-custom"><div class="emoji">🛡️</div><h3>Mayor conservación</h3><p>La reducción de agua ayuda a limitar el crecimiento de microorganismos y retrasa el deterioro.</p></article>
+    <article class="card-custom"><div class="emoji">🎒</div><h3>Fácil de transportar</h3><p>Los alimentos deshidratados suelen reducir su peso y volumen, ocupando menos espacio.</p></article>
+  </div>
+  <div class="highlight"><strong>Objetivo del proyecto:</strong> elaborar frutas deshidratadas aprovechando frutas maduras que todavía estén en buenas condiciones y reduciendo el desperdicio.</div>
+</div>
+</section>
+
+<section class="section section-alt" id="metodos">
+<div class="container-custom">
+  <span class="pill">03 · Métodos</span>
+  <h2>Formas de deshidratar</h2>
+  <p class="intro">Existen diferentes formas de retirar el agua de las frutas. El tiempo depende del tipo de fruta, el grosor de las piezas, la temperatura y las condiciones ambientales.</p>
+  <div class="cards">
+    <article class="card-custom"><div class="emoji">☀️</div><h3>Secado al sol</h3><p>Las frutas se cortan en rodajas y se exponen al sol y al aire. Deben protegerse de insectos y contaminación.</p></article>
+    <article class="card-custom"><div class="emoji">♨️</div><h3>Horno</h3><p>Las piezas se colocan en el horno a una temperatura adecuada para facilitar la salida de humedad. Se debe revisar el proceso periódicamente.</p></article>
+    <article class="card-custom"><div class="emoji">🍟</div><h3>Freidora de aire</h3><p>Las frutas se cortan en rodajas finas y se revisan durante el proceso. Hay que seguir las instrucciones del aparato utilizado.</p></article>
+  </div>
+  <article class="card-custom mt-4">
+    <h3>También se menciona el microondas</h3>
+    <p>La investigación incluye el uso del microondas en intervalos cortos, revisando la fruta y volteándola cuando sea necesario. El tiempo depende del alimento y del aparato.</p>
+  </article>
+</div>
+</section>
+
+<section class="section" id="proceso">
+<div class="container-custom">
+  <span class="pill">04 · Paso a paso</span>
+  <h2>Del alimento fresco al producto conservado</h2>
+  <div class="two-col">
+    <article class="card-custom">
+      <img src="https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=900" alt="Frutas frescas">
+      <h3>Etapas principales</h3>
+      <ol class="steps">
+        <li><strong>Seleccionar:</strong> elegir frutas que estén en buenas condiciones.</li>
+        <li><strong>Lavar:</strong> retirar la tierra y las impurezas.</li>
+        <li><strong>Preparar:</strong> cortar las frutas en piezas de grosor similar.</li>
+        <li><strong>Deshidratar:</strong> utilizar el método seleccionado y revisar el proceso.</li>
+        <li><strong>Dejar enfriar:</strong> permitir que la fruta se enfríe antes de guardarla.</li>
+        <li><strong>Almacenar:</strong> utilizar recipientes limpios, secos y bien cerrados.</li>
+      </ol>
+    </article>
+    <article class="card-custom">
+      <img src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=900" alt="Plátanos frescos">
+      <h3>Frutas que se pueden utilizar</h3>
+      <p>Algunas frutas que se pueden deshidratar son las manzanas, peras, uvas, ciruelas, duraznos, plátanos, kiwis, fresas, higos, arándanos, cerezas, piñas y dátiles.</p>
+      <div class="highlight"><strong>Recuerda:</strong> la preparación, el secado adecuado y el almacenamiento limpio y seco son importantes para conservar la calidad y seguridad de los alimentos.</div>
+    </article>
+  </div>
+</div>
+</section>
+
+
+Parte 2 de 3
+<section class="section section-alt" id="experimento">
+<div class="container-custom">
+  <span class="pill">05 · Práctica experimental</span>
+  <h2>Nuestro experimento: rollos de fruta deshidratados</h2>
+  <p class="intro">Consulta las evidencias y observaciones de la práctica seleccionando cada etapa en orden: antes, durante y después.</p>
+
+  <div id="experimentoApp" class="experiment-app">
+    <div v-if="cargando" class="status-message" role="status">
+      ⏳ Cargando datos del experimento...
+    </div>
+
+    <div v-else-if="error" class="error-message" role="alert">
+      <strong>No fue posible cargar los datos.</strong>
+      <p>{{ error }}</p>
+      <p>Comprueba que estás conectado a internet y que Vue se ha cargado correctamente.</p>
+      <button class="btn-main" type="button" @click="cargarDatos">Volver a intentar</button>
+    </div>
+
+    <div v-else>
+      <div class="stage-buttons" aria-label="Etapas del experimento">
+        <button v-for="etapa in etapas" :key="etapa.id"
+          class="stage-button"
+          :class="{ active: etapaActiva === etapa.id }"
+          :aria-pressed="etapaActiva === etapa.id"
+          @click="seleccionarEtapa(etapa.id)">
+          {{ etapa.nombre }}
+        </button>
+      </div>
+
+      <etapa-experimento
+        v-if="etapaSeleccionada"
+        :etapa="etapaSeleccionada"
+        :nota-datos="notaDatos">
+      </etapa-experimento>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section section-alt" id="english">
+<div class="container-custom">
+  <span class="pill">06 · English section</span>
+  <h2>Food Dehydration</h2>
+  <p class="intro">Learn how dehydration helps preserve food, explore common drying methods, and review the basic steps.</p>
+
+  <div class="two-col">
+    <article class="card-custom">
+      <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900" alt="Fresh fruit ready to be prepared">
+      <h3>What is food dehydration?</h3>
+      <p>Dehydration is a food preservation method that removes much of the water from food. With less available water, the growth of many microorganisms can be limited and spoilage can be delayed.</p>
+      <h3>Main benefits</h3>
+      <ul>
+        <li>It can extend the shelf life of food.</li>
+        <li>It reduces weight and volume.</li>
+        <li>It makes food easier to store and transport.</li>
+        <li>It can help reduce food waste.</li>
+      </ul>
+    </article>
+
+    <article class="card-custom">
+      <img src="https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?w=900" alt="A variety of fresh fruit">
+      <h3>Common drying methods</h3>
+      <p><strong>Sun drying:</strong> Fruit is exposed to sunlight and moving air while protected from insects and contamination.</p>
+      <p><strong>Oven drying:</strong> Low heat helps moisture leave the fruit. Drying time depends on the fruit and its thickness.</p>
+      <p><strong>Air fryer:</strong> Thin fruit slices are dried and checked regularly. Follow the appliance instructions.</p>
+      <h3>Basic steps</h3>
+      <ol>
+        <li>Select fruit in good condition.</li>
+        <li>Wash and cut it into similar-sized pieces.</li>
+        <li>Dry it using an appropriate method.</li>
+        <li>Let it cool before storing.</li>
+        <li>Store it in a clean, dry container.</li>
+      </ol>
+    </article>
+  </div>
+
+  <div class="cards mt-4">
+    <article class="card-custom">
+      <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900" alt="Fresh fruit selection">
+      <h3>Fruit selection</h3>
+      <p>Apples, bananas, strawberries, grapes, pears, and pineapples are examples of fruits that can be dehydrated.</p>
+    </article>
+    <article class="card-custom">
+      <img src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=900" alt="Fruit for food storage">
+      <h3>Food storage</h3>
+      <p>Keep dried food in a clean, dry, sealed container and protect it from moisture.</p>
+    </article>
+    <article class="card-custom">
+      <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=900" alt="Food ingredients">
+      <h3>Remember</h3>
+      <p>Successful dehydration depends on the fruit, slice thickness, drying conditions, and storage.</p>
+    </article>
+  </div>
+</div>
+</section>
+
+<section class="quiz" id="quiz">
+<div class="container-custom">
+  <span class="pill">07 · Practice your English</span>
+  <h2>Interactive Quiz</h2>
+  <p class="intro">Answer the questions in English. Select one answer for each question, then check your score. You can try again.</p>
+
+  <form id="quizForm" class="quizbox">
+    <fieldset class="question">
+      <legend>1. What is the main purpose of dehydration?</legend>
+      <label class="option"><input type="radio" name="q1" value="a"> To add water to food</label>
+      <label class="option"><input type="radio" name="q1" value="b"> To remove much of the water from food</label>
+      <label class="option"><input type="radio" name="q1" value="c"> To freeze all food</label>
+    </fieldset>
+
+    <fieldset class="question">
+      <legend>2. True or False: Dehydration can help slow the growth of microorganisms.</legend>
+      <label class="option"><input type="radio" name="q2" value="a"> True</label>
+      <label class="option"><input type="radio" name="q2" value="b"> False</label>
+    </fieldset>
+
+    <fieldset class="question">
+      <legend>3. Which method uses solar energy?</legend>
+      <label class="option"><input type="radio" name="q3" value="a"> Oven drying</label>
+      <label class="option"><input type="radio" name="q3" value="b"> Sun drying</label>
+      <label class="option"><input type="radio" name="q3" value="c"> Freezing</label>
+    </fieldset>
+
+    <fieldset class="question">
+      <legend>4. Why should fruit slices have a similar thickness?</legend>
+      <label class="option"><input type="radio" name="q4" value="a"> To help them dry more evenly</label>
+      <label class="option"><input type="radio" name="q4" value="b"> To make them absorb more water</label>
+      <label class="option"><input type="radio" name="q4" value="c"> To make them heavier</label>
+    </fieldset>
+
+    <fieldset class="question">
+      <legend>5. True or False: Dried food should be stored in a clean, dry place.</legend>
+      <label class="option"><input type="radio" name="q5" value="a"> True</label>
+      <label class="option"><input type="radio" name="q5" value="b"> False</label>
+    </fieldset>
+
+    <fieldset class="question">
+      <legend>6. Which of these is a benefit of dehydration?</legend>
+      <label class="option"><input type="radio" name="q6" value="a"> Food always becomes heavier</label>
+      <label class="option"><input type="radio" name="q6" value="b"> Food takes up more storage space</label>
+      <label class="option"><input type="radio" name="q6" value="c"> Food can become lighter and easier to transport</label>
+    </fieldset>
+
+    <div class="mt-4">
+      <button type="submit" class="btn-main">Check Answers</button>
+      <button type="button" class="btn-main btn-secondary-custom" id="retry">Try Again</button>
+    </div>
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+  </form>
+</div>
+</section>
+</main>
+
+<footer>
+<strong>Food Lab · STEAM I</strong><br>
+Food preservation by dehydration<br>
+Educational project
+</footer>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+<script>
+const { createApp } = Vue;
+
+// Datos del experimento incluidos en este mismo archivo.
+const experimentoData = {
+  titulo: "Experimento: rollos de fruta deshidratados",
+
+  notaDatos: "La investigación incluye dos descripciones distintas de tiempo y temperatura. En el procedimiento general se indica horno a 70 °C durante 1 hora; en el control experimental se registra 150 °C y aproximadamente una hora y media por prueba. Se conservan ambos registros tal como aparecen en el documento.",
+
+  etapas: [
+    {
+      id: "antes",
+      nombre: "Antes",
+      subtitulo: "Preparación del experimento",
+      observaciones: [
+        "El alimento seleccionado fue rollos de fruta deshidratados elaborados con frutos rojos congelados o fruta fresca.",
+        "Los ingredientes registrados fueron frutos rojos, miel o endulzante, jugo de limón y agua.",
+        "Los materiales fueron utensilios de cocina, papel para hornear, charola y horno.",
+        "La bitácora registra la fecha 22-11-26, inicio a las 15:00 h, cierre a las 20:00 h y lugar: cocina."
+      ],
+      fotografias: [],
+      mensajeFoto: "El documento no incluye una fotografía independiente de la fruta antes de iniciar el experimento."
+    },
+
+    {
+      id: "durante",
+      nombre: "Durante",
+      subtitulo: "Preparación y desarrollo de las dos pruebas",
+      observaciones: [
+        "Se cortaron y lavaron las frutas y se descongelaron los frutos rojos.",
+        "Se colocaron las frutas en una olla a fuego bajo durante 5 minutos para que soltaran su jugo.",
+        "La mezcla se molió en la licuadora y se coló para retirar las semillas en la segunda prueba.",
+        "Se agregó miel o endulzante y medio jugo de limón; el documento indica dejar hervir aproximadamente 5 minutos.",
+        "La mezcla se extendió sobre papel para hornear colocado en una charola.",
+        "En el procedimiento general se registra horno a 70 °C durante 1 hora y girar la charola cada 10 minutos.",
+        "En el control experimental se registra una temperatura de 150 °C y aproximadamente una hora y media por prueba.",
+        "La prueba 1 conservó las semillas y se extendió en una capa fina. Para la prueba 2 se coló la mezcla y se colocó una capa más gruesa."
+      ],
+      fotografias: [
+        {
+          archivo: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900",
+          alt: "Frutas utilizadas en el experimento",
+          descripcion: "Preparación de los ingredientes del experimento."
+        },
+        {
+          archivo: "https://images.unsplash.com/photo-1547592180-85f173990554?w=900",
+          alt: "Ingredientes preparados",
+          descripcion: "Ingredientes y preparación de la mezcla."
+        }
+      ]
+    },
+
+    {
+      id: "despues",
+      nombre: "Después",
+      subtitulo: "Observaciones y resultados",
+      observaciones: [
+        "La prueba 1 conservó las semillas y se extendió en una capa fina. El resultado se pegó al papel para hornear y quedó crujiente y rígido.",
+        "La prueba 2 se coló para retirar las semillas y se extendió en una capa más gruesa. El resultado fue flexible y manejable.",
+        "El centro tardó más en deshidratarse que las orillas.",
+        "La charola se giró cada 5 a 10 minutos.",
+        "El color cambió de violeta a violeta oscuro.",
+        "En el registro se indicó que no se percibió olor."
+      ],
+      fotografias: [
+        {
+          archivo: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900",
+          alt: "Resultado de fruta deshidratada",
+          descripcion: "Imagen ilustrativa del resultado del experimento."
+        },
+        {
+          archivo: "https://images.unsplash.com/photo-1547592180-85f173990554?w=900",
+          alt: "Producto final",
+          descripcion: "Imagen ilustrativa de alimentos preparados."
+        }
+      ],
+      comparacion: [
+        {
+          prueba: "Prueba 1",
+          colorAntes: "Violeta",
+          colorDespues: "Violeta oscuro",
+          texturaAntes: "Líquida",
+          texturaDespues: "Crujiente",
+          olor: "Ninguno",
+          aparienciaAntes: "Densa",
+          aparienciaDespues: "Rígida",
+          consistenciaAntes: "Grumosa",
+          consistenciaDespues: "Dura (chips)"
+        },
+        {
+          prueba: "Prueba 2",
+          colorAntes: "Violeta",
+          colorDespues: "Violeta oscuro",
+          texturaAntes: "Líquida",
+          texturaDespues: "Flexible",
+          olor: "Ninguno",
+          aparienciaAntes: "Acuosidad",
+          aparienciaDespues: "Manejable",
+          consistenciaAntes: "Espesa",
+          consistenciaDespues: "Flexible"
+        }
+      ],
+      conclusion: "El equipo concluyó que eliminar gran parte del agua ayuda a prolongar la vida útil de los alimentos. La prueba 1 mostró que una capa fina dificultó despegar el producto del papel para hornear; la prueba 2, colada y con una capa más gruesa, obtuvo una textura flexible y manejable. El documento recomienda supervisar el proceso y mantener una higiene adecuada."
+    }
+  ]
+};
+
+// Creamos un archivo JSON temporal para cargar los datos mediante fetch().
+const urlDatosJSON = URL.createObjectURL(
+  new Blob(
+    [JSON.stringify(experimentoData)],
+    { type: "application/json" }
+  )
+);
+
+// Componente de Vue para mostrar cada etapa.
+const EtapaExperimento = {
+  props: {
+    etapa: { type: Object, required: true },
+    notaDatos: { type: String, default: "" }
+  },
+
+  template: `
+    <article class="stage-content">
+      <span class="pill">Etapa: {{ etapa.nombre }}</span>
+      <h3>{{ etapa.subtitulo }}</h3>
+
+      <h4 class="mt-3">Observaciones</h4>
+      <ul class="observation-list">
+        <li
+          v-for="(observacion, indice) in etapa.observaciones"
+          :key="indice">
+          {{ observacion }}
+        </li>
+      </ul>
+
+      <div v-if="etapa.fotografias && etapa.fotografias.length">
+        <h4 class="mt-4">Fotografías de esta etapa</h4>
+        <div class="photo-grid">
+          <figure
+            class="photo-card"
+            v-for="foto in etapa.fotografias"
+            :key="foto.archivo">
+            <img :src="foto.archivo" :alt="foto.alt">
+            <figcaption>{{ foto.descripcion }}</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <p v-else-if="etapa.mensajeFoto" class="note-data">
+        {{ etapa.mensajeFoto }}
+      </p>
+
+      <div
+        v-if="etapa.comparacion && etapa.comparacion.length"
+        class="comparison-wrap">
+
+        <h4>Comparación de resultados</h4>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Característica</th>
+              <th>Prueba 1</th>
+              <th>Prueba 2</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <th>Color</th>
+              <td>{{ etapa.comparacion[0].colorAntes }} → {{ etapa.comparacion[0].colorDespues }}</td>
+              <td>{{ etapa.comparacion[1].colorAntes }} → {{ etapa.comparacion[1].colorDespues }}</td>
+            </tr>
+            <tr>
+              <th>Textura</th>
+              <td>{{ etapa.comparacion[0].texturaAntes }} → {{ etapa.comparacion[0].texturaDespues }}</td>
+              <td>{{ etapa.comparacion[1].texturaAntes }} → {{ etapa.comparacion[1].texturaDespues }}</td>
+            </tr>
+            <tr>
+              <th>Olor</th>
+              <td>{{ etapa.comparacion[0].olor }}</td>
+              <td>{{ etapa.comparacion[1].olor }}</td>
+            </tr>
+            <tr>
+              <th>Apariencia</th>
+              <td>{{ etapa.comparacion[0].aparienciaAntes }} → {{ etapa.comparacion[0].aparienciaDespues }}</td>
+              <td>{{ etapa.comparacion[1].aparienciaAntes }} → {{ etapa.comparacion[1].aparienciaDespues }}</td>
+            </tr>
+            <tr>
+              <th>Consistencia</th>
+              <td>{{ etapa.comparacion[0].consistenciaAntes }} → {{ etapa.comparacion[0].consistenciaDespues }}</td>
+              <td>{{ etapa.comparacion[1].consistenciaAntes }} → {{ etapa.comparacion[1].consistenciaDespues }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div v-if="etapa.conclusion" class="highlight">
+        <h4>Conclusión del experimento</h4>
+        <p>{{ etapa.conclusion }}</p>
+      </div>
+
+      <p v-if="notaDatos" class="note-data">
+        <strong>Nota sobre el registro:</strong> {{ notaDatos }}
+      </p>
+    </article>
+  `
+};
+
+// Aplicación principal de Vue.
+const experimentoApp = createApp({
+  data() {
+    return {
+      cargando: true,
+      error: "",
+      etapas: [],
+      etapaActiva: "antes",
+      notaDatos: ""
+    };
+  },
+
+  computed: {
+    etapaSeleccionada() {
+      return this.etapas.find(
+        etapa => etapa.id === this.etapaActiva
+      ) || null;
+    }
+  },
+
+  methods: {
+    seleccionarEtapa(id) {
+      this.etapaActiva = id;
+    },
+
+    async cargarDatos() {
+      this.cargando = true;
+      this.error = "";
+
+      try {
+        const respuesta = await fetch(urlDatosJSON);
+
+        if (!respuesta.ok) {
+          throw new Error("No se pudieron cargar los datos del experimento.");
+        }
+
+        const datos = await respuesta.json();
+
+        this.etapas = datos.etapas;
+        this.notaDatos = datos.notaDatos || "";
+
+        if (!this.etapas.some(etapa => etapa.id === this.etapaActiva)) {
+          this.etapaActiva = this.etapas[0]?.id || "antes";
+        }
+
+      } catch (error) {
+        console.error("Error al cargar los datos:", error);
+        this.error = error.message || "Ocurrió un error inesperado.";
+      } finally {
+        this.cargando = false;
+      }
+    }
+  },
+
+  mounted() {
+    this.cargarDatos();
+  }
+});
+
+experimentoApp.component("etapa-experimento", EtapaExperimento);
+experimentoApp.mount("#experimentoApp");
+
+// Respuestas del cuestionario.
+const answers = {
+  q1: "b",
+  q2: "a",
+  q3: "b",
+  q4: "a",
+  q5: "a",
+  q6: "c"
+};
+
+const explanations = {
+  q1: "Dehydration removes much of the water from food.",
+  q2: "True. Less available water helps limit microbial growth.",
+  q3: "Sun drying uses energy from the sun.",
+  q4: "Similar slices can help the fruit dry more evenly.",
+  q5: "True. Clean, dry storage helps protect food quality.",
+  q6: "Removing water usually reduces food weight and volume."
+};
+
+const form = document.getElementById("quizForm");
+const feedback = document.getElementById("feedback");
+
+// Revisar las respuestas.
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  let score = 0;
+  let unanswered = 0;
+  const details = [];
+
+  for (let i = 1; i <= 6; i++) {
+    const questionName = "q" + i;
+
+    const selected = form.querySelector(
+      `input[name="${questionName}"]:checked`
+    );
+
+    if (!selected) {
+      unanswered++;
+
+      details.push(
+        `<li><strong>Question ${i}:</strong> Not answered. ${explanations[questionName]}</li>`
+      );
+
+    } else if (selected.value === answers[questionName]) {
+      score++;
+
+      details.push(
+        `<li>✅ <strong>Question ${i}: Correct.</strong> ${explanations[questionName]}</li>`
+      );
+
+    } else {
+      details.push(
+        `<li>❌ <strong>Question ${i}: Incorrect.</strong> ${explanations[questionName]}</li>`
+      );
+    }
+  }
+
+  const percentage = Math.round((score / 6) * 100);
+
+  let message = score === 6
+    ? "Excellent work!"
+    : score >= 4
+      ? "Good job! Review the feedback below."
+      : "Keep practicing and try again.";
+
+  feedback.innerHTML =
+    `<div class="score">Your score: ${score} / 6 (${percentage}%)</div>` +
+    `<p>${message}</p>` +
+    (unanswered > 0
+      ? `<p>You left ${unanswered} question(s) unanswered.</p>`
+      : "") +
+    `<ul>${details.join("")}</ul>`;
+
+  feedback.classList.add("show");
+
+  feedback.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+});
+
+// Botón para volver a intentar.
+document.getElementById("retry").addEventListener("click", function() {
+  form.reset();
+  feedback.classList.remove("show");
+  feedback.innerHTML = "";
+
+  document.getElementById("quiz").scrollIntoView({
+    behavior: "smooth"
+  });
+});
+</script>
+
+</body>
+</html>
